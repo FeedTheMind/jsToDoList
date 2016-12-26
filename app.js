@@ -57,8 +57,12 @@ var addTask = function () {
   taskInput.value = '';
 };
 
-var editTask = function () {
-  console.log('Edit task . . . ');
+var editTask = function (event) {
+  if (event.target.tagName === 'BUTTON') {
+    console.log('Edit ' + event.target.tagName + ' task . . . ');
+  } else {
+    console.log(event.target.tagName + ' task . . . ');
+  }
 
   var listItem = this.parentNode;
   var editInput = listItem.querySelector('input[type=text]');
@@ -73,7 +77,6 @@ var editTask = function () {
 
   listItem.classList.toggle('editMode');
   editInput.focus();
-
 };
 
 var deleteTask = function () {
@@ -107,12 +110,16 @@ var bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
   var checkBox = taskListItem.querySelector('input[type=checkbox]');
   var editButton = taskListItem.querySelector('button.edit');
   var deleteButton = taskListItem.querySelector('button.delete');
+  var label = taskListItem.querySelector('label');
 
   editButton.onclick = editTask;
   
   deleteButton.onclick = deleteTask;
   
   checkBox.onchange = checkBoxEventHandler;
+
+  label.onclick = editTask;
+
 };
 
 addButton.addEventListener("click", addTask);
