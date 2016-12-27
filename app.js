@@ -5,15 +5,10 @@ var completedTasksHolder = document.getElementById('completed-tasks');
 
 var createNewTaskElement = function (taskString) {
   var listItem = document.createElement('li');
-
   var checkBox = document.createElement('input');
-
   var label = document.createElement('label');
-
   var editInput = document.createElement('input');
-
   var editButton = document.createElement('button');
-
   var deleteButton = document.createElement('button');
 
   // Limit to 24 characters 
@@ -59,7 +54,7 @@ var addTask = function () {
 
 var editTask = function (event) {
   if (event.target.tagName === 'BUTTON') {
-    console.log('Edit ' + event.target.tagName + ' task . . . ');
+    console.log('Edit/Done ' + event.target.tagName + ' task . . . ');
   } else {
     console.log(event.target.tagName + ' task . . . ');
   }
@@ -71,8 +66,10 @@ var editTask = function (event) {
 
   if (containsClass) {
     label.innerText = editInput.value;
+    this.innerText = 'Edit';
   } else {
     editInput.value = label.innerText;
+    editInput.nextElementSibling.innerText = 'Done';
   }
 
   if (!listItem.children[1].innerText) {
@@ -123,7 +120,6 @@ var bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
   checkBox.onchange = checkBoxEventHandler;
 
   label.onclick = editTask;
-
 };
 
 addButton.addEventListener("click", addTask);
