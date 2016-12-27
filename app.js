@@ -40,15 +40,15 @@ var createNewTaskElement = function (taskString) {
 
 var addTask = function () {
   console.log('Add task . . . ');
-
   taskInput.focus();
 
+  var taskValue = taskInput.value;
   // Check if zero input
-  if (!taskInput.value) {
-    return;
+  if (taskValue.replace(/\s+/, '').length === 0) {
+    return taskInput.value = '';
   }
 
-  var listItem = createNewTaskElement(taskInput.value);
+  var listItem = createNewTaskElement(taskValue.trim());
 
   incompleteTasksHolder.appendChild(listItem);
   bindTaskEvents(listItem, taskCompleted);
@@ -68,11 +68,15 @@ var editTask = function (event) {
   var editInput = listItem.querySelector('input[type=text]');
   var label = listItem.querySelector('label');
   var containsClass = listItem.classList.contains('editMode');
-  
+
   if (containsClass) {
     label.innerText = editInput.value;
   } else {
     editInput.value = label.innerText;
+  }
+
+  if (!listItem.children[1].innerText) {
+    listItem.children[1].innerText = 'Fill out later.';
   }
 
   listItem.classList.toggle('editMode');
